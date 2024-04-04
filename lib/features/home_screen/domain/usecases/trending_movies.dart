@@ -1,4 +1,3 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:fpdart/fpdart.dart';
 import 'package:movie_app_clean_bloc/core/errors/failure.dart';
 import 'package:movie_app_clean_bloc/core/usecase/usecase.dart';
@@ -16,5 +15,3 @@ class TredingMovies implements UseCase<List<Movie>, NoParams> {
     return tmdbRepository.getTredingMovies();
   }
 }
-
-class NoParams {}

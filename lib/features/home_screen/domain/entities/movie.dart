@@ -1,5 +1,5 @@
 class Movie {
-  String id;
+  int id;
   String posterPath;
   String movieTitle;
   String mediaType;

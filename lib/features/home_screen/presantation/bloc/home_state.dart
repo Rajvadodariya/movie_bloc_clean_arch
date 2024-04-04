@@ -16,3 +16,13 @@ final class HomeSuccess extends HomeState {
   final List<Movie> movie;
   HomeSuccess({required this.movie});
 }
+
+final class TrendigMovieLoaded extends HomeState {
+  final List<Movie> trandingMovies;
+  TrendigMovieLoaded({required this.trandingMovies});
+}
+
+final class TopRatedMovieLoaded extends HomeState {
+  final List<Movie> topRatedMovies;
+  TopRatedMovieLoaded({required this.topRatedMovies});
+}

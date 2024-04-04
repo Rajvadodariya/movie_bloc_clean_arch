@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import '../bloc/home_bloc.dart';
+import '../widgets/movie_lists.dart';
 import '../widgets/trending_movies.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -12,15 +12,22 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  String _selectedLabel = 'Now Playing';
+  HomeEvent event = FetchNowPlayingMovies();
+
   @override
   void initState() {
     super.initState();
-    context.read<HomeBloc>().add(FetchTredingMovies());
+  }
+
+  void changeEvent(HomeEvent value) {
+    setState(() {
+      event = value;
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    String _selectedLabel = 'Now Playing';
     return Scaffold(
       backgroundColor: const Color(0xff242A32),
       appBar: AppBar(
@@ -86,7 +93,6 @@ class _HomeScreenState extends State<HomeScreen> {
               ],
             ),
             //Trending Movies
-            // TrandingMoviesWidget(moviesFuture: movieFuture),
             const TrendingMoviesCards(),
             Padding(
               padding: const EdgeInsets.only(left: 0, top: 10),
@@ -95,7 +101,12 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: Row(
                   children: [
                     GestureDetector(
-                      onTap: () {},
+                      onTap: () {
+                        setState(() {
+                          _selectedLabel = 'Now Playing';
+                          changeEvent(FetchNowPlayingMovies());
+                        });
+                      },
                       child: Container(
                         decoration: _selectedLabel == 'Now Playing'
                             ? const BoxDecoration(
@@ -112,7 +123,12 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                     const SizedBox(width: 15),
                     GestureDetector(
-                      onTap: () {},
+                      onTap: () {
+                        setState(() {
+                          _selectedLabel = 'Popular';
+                          changeEvent(FetchPopularMovies());
+                        });
+                      },
                       child: Container(
                         decoration: _selectedLabel == 'Popular'
                             ? const BoxDecoration(
@@ -129,7 +145,12 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                     const SizedBox(width: 15),
                     GestureDetector(
-                      onTap: () {},
+                      onTap: () {
+                        setState(() {
+                          _selectedLabel = 'Top Rated';
+                          changeEvent(FetchTopRatedMovies());
+                        });
+                      },
                       child: Container(
                         decoration: _selectedLabel == 'Top Rated'
                             ? const BoxDecoration(
@@ -146,7 +167,12 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                     const SizedBox(width: 15),
                     GestureDetector(
-                      onTap: () {},
+                      onTap: () {
+                        setState(() {
+                          _selectedLabel = 'Upcoming';
+                          changeEvent(FetchUpcomingMovies());
+                        });
+                      },
                       child: Container(
                         decoration: _selectedLabel == 'Upcoming'
                             ? const BoxDecoration(
@@ -165,7 +191,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ),
             ),
-            // movieList(selectedFuture, _selectedLabel)
+            MovieListCards(event: FetchUpcomingMovies())
           ],
         ),
       ),

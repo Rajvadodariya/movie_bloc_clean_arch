@@ -16,14 +16,11 @@ class MoviesRemoteDataSourceImpl implements MovieRemoteDataSource {
   @override
   Future<List<MovieModel>> getTredingMovies() async {
     try {
-      print('--------------Entered-------------------');
       var response = await http.get(Uri.parse(
           '${Constants.apiDomain}/trending/all/day?api_key=${Constants.apiKey}'));
       var data = jsonDecode(response.body)['results'] as List;
-      print(data);
       List<MovieModel> moviesList =
           data.map((data) => MovieModel.fromJson(data)).toList();
-      print('--------------$moviesList--------------');
       return moviesList;
     } on SocketException {
       throw Exception('No Internet connection');
@@ -41,10 +38,12 @@ class MoviesRemoteDataSourceImpl implements MovieRemoteDataSource {
     try {
       var response = await http.get(Uri.parse(
           '${Constants.apiDomain}/movie/popular?api_key=${Constants.apiKey}'));
-      var data = jsonDecode(response.body)['results'] as List;
-      List<MovieModel> popularMovies =
-          data.map((movie) => MovieModel.fromJson(movie)).toList();
-      return popularMovies;
+      {
+        var data = jsonDecode(response.body)['results'] as List;
+        List<MovieModel> nowPlaying =
+            data.map((movie) => MovieModel.fromJson(movie)).toList();
+        return nowPlaying;
+      }
     } on SocketException {
       throw Exception('No Internet connection');
     } on HttpException {

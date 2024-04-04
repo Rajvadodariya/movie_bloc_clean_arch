@@ -9,10 +9,10 @@ class MovieModel extends Movie {
 
   factory MovieModel.fromJson(Map<String, dynamic> json) {
     return MovieModel(
-        id: json['id'],
-        movieTitle: json['original_title'],
-        posterPath: json['poster_path'],
-        mediaType: json['media_type']);
+        id: json['id'] ?? '',
+        movieTitle: json['original_title'] ?? '',
+        posterPath: json['poster_path'] ?? '',
+        mediaType: json['media_type'] ?? '');
   }
 
   Map<String, dynamic> toJson() =>
